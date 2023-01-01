@@ -1,65 +1,63 @@
 'use strict';
 
 window.addEventListener('DOMContentLoaded', () => {
-    const numberOfFilms = +prompt('How many films have you already watched?', '');
+    let numberOfFilms;
+
+    function start() {
+        numberOfFilms = +prompt('How many films have you already watched?', '');
+
+        while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+            numberOfFilms = +prompt('How many films have you already watched?', '');
+        }
+    }
+    start();
 
     const personalMovieDB = {
         count: numberOfFilms,
         movies: {},
         actors: {},
         genres: [],
-        privat: false
+        private: false
     };
 
-    /* My variant */
-    /*restartLoop:
-        while (true) {
-            for (let i = 1; i <= 2; i++) {
-                const questionLastWatchedMovie = prompt('One of the last movies you watched?', '');
-                if (questionLastWatchedMovie === null) {
-                    personalMovieDB.movies = {};
-                    continue restartLoop;
-                } else if (questionLastWatchedMovie === '' || questionLastWatchedMovie.length > 50) {
-                    personalMovieDB.movies = {};
-                    continue restartLoop;
-                }
+    function rememberMyFilms() {
+        for (let i = 0; i < 2; i++) {
+            const questionLastWatchedMovie = prompt('One of the last movies you watched??', '');
+            const questionMovieRate = prompt('How much would you rate it?', '');
 
-                const questionMovieRate = prompt('How much would you rate it?', '');
-                if (questionMovieRate === null) {
-                    personalMovieDB.movies = {};
-                    continue restartLoop;
-                } else if (questionMovieRate === '' || questionMovieRate.length > 2) {
-                    personalMovieDB.movies = {};
-                    continue restartLoop;
-                }
-
+            if (questionLastWatchedMovie != null && questionMovieRate != null && questionLastWatchedMovie !== '' && questionMovieRate !== '' && questionLastWatchedMovie.length < 50) {
                 personalMovieDB.movies[questionLastWatchedMovie] = questionMovieRate;
+                console.log('Done');
+            } else {
+                console.log('Error');
+                i--;
             }
-            break;
-        }*/
-
-    for (let i = 0; i < 2; i++) {
-        const questionLastWatchedMovie = prompt('One of the last movies you watched??', '');
-        const questionMovieRate = prompt('How much would you rate it?', '');
-
-        if (questionLastWatchedMovie != null && questionMovieRate != null && questionLastWatchedMovie !== '' && questionMovieRate !== '' && questionLastWatchedMovie.length < 50) {
-            personalMovieDB.movies[questionLastWatchedMovie] = questionMovieRate;
-            console.log('Done');
-        } else {
-            console.log('Error');
-            i--;
         }
     }
+    rememberMyFilms();
 
-    if (personalMovieDB.count < 10) {
-        alert('Watched quite a few films');
-    } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
-        alert('You are a classic spectator');
-    } else if (personalMovieDB.count >= 30) {
-        alert('Are you a cinephile');
-    } else {
-        alert('An error has occurred');
+    function detectPersonalLevel() {
+        if (personalMovieDB.count < 10) {
+            alert('Watched quite a few films');
+        } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+            alert('You are a classic spectator');
+        } else if (personalMovieDB.count >= 30) {
+            alert('Are you a cinephile');
+        } else {
+            alert('An error has occurred');
+        }
     }
+    detectPersonalLevel();
 
-    console.log(personalMovieDB.movies);
+    function writeYourGenres() {
+        for (let i = 1; i <= 3; i++) {
+            personalMovieDB.genres[i-1] = prompt(`Your favorite genre under number ${i}`, '');
+        }
+    }
+    writeYourGenres();
+
+    function showMyDB(hidden) {
+        if (!hidden) console.log(personalMovieDB);
+    }
+    showMyDB(personalMovieDB.private);
 })
