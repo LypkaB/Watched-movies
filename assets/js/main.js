@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function rememberMyFilms() {
         for (let i = 0; i < 2; i++) {
-            const questionLastWatchedMovie = prompt('One of the last movies you watched??', '');
+            const questionLastWatchedMovie = prompt('One of the last movies you watched??', '').trim();
             const questionMovieRate = prompt('How much would you rate it?', '');
 
             if (questionLastWatchedMovie != null && questionMovieRate != null && questionLastWatchedMovie !== '' && questionMovieRate !== '' && questionLastWatchedMovie.length < 50) {
